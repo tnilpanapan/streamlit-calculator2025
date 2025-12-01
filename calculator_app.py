@@ -4,7 +4,7 @@ st.set_page_config(page_title="Calculator 3 Inputs", layout="centered")
 st.title("Calculator – x, y, z + เงื่อนไข z")
 
 # ---------- ฟังก์ชันคำนวณ ----------
-def compute_results(x_str: str, y_str: str, z_str: str):
+def compute_results(V_str: str, PC_str: str, D_str: str):
     """
     รับ string x_str, y_str, z_str
     แปลง x_str, y_str เป็น float
@@ -14,26 +14,26 @@ def compute_results(x_str: str, y_str: str, z_str: str):
     """
 
     # แปลง x, y เป็น float (ถ้าไม่ได้จะ raise ValueError)
-    x = float(x_str)
-    y = float(y_str)
+    V = float(V_str)
+    PC = float(PC_str)
 
     # ปรับตามค่า z
     if z_str.lower() == "d":
-        x = x * 2
+        PC = PC/1.732
     else:
-        y = y * 10
+        V = V/1.732
 
     # คำนวณผลลัพธ์
-    result_1 = x + y
-    result_2 = x - y
+    # result_1 = x + y
+    # result_2 = x - y
 
-    return x, y, result_1, result_2
+    return V, PC
 
 
 # ---------- ส่วนรับค่า input ----------
-x_str = st.text_input("ตัวเลขที่ 1 (x)", value="", placeholder="พิมพ์ตัวเลข…")
-y_str = st.text_input("ตัวเลขที่ 2 (y)", value="", placeholder="พิมพ์ตัวเลข…")
-z_str = st.text_input("ตัวแปรเงื่อนไข (z)", value="", placeholder='เช่น d หรือ D')
+V_str = st.text_input("PRI VOL V", value="", placeholder="พิมพ์ตัวเลข…")
+PC_str = st.text_input("PRI CUR I", value="", placeholder="พิมพ์ตัวเลข…")
+D_str = st.text_input("INPUT VOL Y OR D", value="", placeholder='เช่น d หรือ D หรือ y หรือ Y')
 
 # ปุ่มเท่ากับ
 calculate = st.button(" = ", type="primary")
@@ -44,18 +44,18 @@ st.write("---")
 if calculate:
     # เช็คว่ากรอก x, y ถูกเป็นตัวเลขหรือไม่
     try:
-        x_adj, y_adj, result_1, result_2 = compute_results(x_str, y_str, z_str)
+        V_adj, PC_adj = compute_results(V_str, PC_str, D_str)
         valid = True
     except ValueError:
         valid = False
 
     if not valid:
-        st.error("กรุณากรอก x และ y เป็นตัวเลขให้ถูกต้อง")
+        st.error("กรุณากรอก V และ PC เป็นตัวเลขให้ถูกต้อง")
     else:
         # แสดงค่า x, y หลังถูกปรับตาม z
-        st.write(f"ค่า x หลังปรับ = {x_adj}")
-        st.write(f"ค่า y หลังปรับ = {y_adj}")
+        st.write(f"ค่า V หลังเงื่อนไข Y OR D บรรทัด 10 = {V_adj}")
+        st.write(f"ค่า PC หลังเงื่อนไข Y OR D บรรทัด 10 = {PC_adj}")
 
         # แสดง output 2 ช่อง
-        st.success(f"Result_1 = x + y = {result_1}")
-        st.info(f"Result_2 = x - y = {result_2}")
+        st.success(f"V = x + y = {V_adj}")
+        st.info(f"PC = x - y = {PC_adj}")
