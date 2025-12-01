@@ -1,13 +1,13 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="Simple Calculator v2",
+    page_title="Simple Calculator v2.1",
     page_icon="🧮",
     layout="centered",
 )
 
-st.title("🧮 Simple Calculator (v2)")
-st.write("เวอร์ชันแป้นกดตัวเลข 0–9, '.' และ '='")
+st.title("🧮 Simple Calculator (Keypad ver.)")
+st.write("แป้นกด 0–9, '.' และ '=' เลือกช่องด้วยปุ่มสลับด้านล่าง")
 
 # ---------- initial state ----------
 if "num1_str" not in st.session_state:
@@ -16,20 +16,23 @@ if "num2_str" not in st.session_state:
     st.session_state.num2_str = ""
 if "result" not in st.session_state:
     st.session_state.result = None
+if "target" not in st.session_state:
+    st.session_state.target = "num1"   # num1 หรือ num2
+
+def toggle_target():
+    st.session_state.target = "num2" if st.session_state.target == "num1" else "num1"
 
 # ---------- helper ----------
 def press_key(key: str):
-    target = st.session_state.target_input  # "Number 1" หรือ "Number 2"
-
+    # ล้าง
     if key == "C":
-        # ล้างค่าทุกอย่าง
         st.session_state.num1_str = ""
         st.session_state.num2_str = ""
         st.session_state.result = None
         return
 
+    # คำนวณ
     if key == "=":
-        # คำนวณผลลัพธ์
         try:
             num1 = float(st.session_state.num1_str or "0")
             num2 = float(st.session_state.num2_str or "0")
@@ -52,36 +55,32 @@ def press_key(key: str):
                 st.session_state.result = num1 / num2
         return
 
-    # ถ้าเป็นตัวเลขหรือจุด → ต่อ string
-    if target == "Number 1":
+    # ต่อ string ตามช่องที่กำลังแก้
+    if st.session_state.target == "num1":
         if key == "." and "." in st.session_state.num1_str:
-            return  # ไม่ให้มีจุดสองอัน
+            return
         st.session_state.num1_str += key
-    else:  # Number 2
+    else:
         if key == "." and "." in st.session_state.num2_str:
             return
         st.session_state.num2_str += key
 
 
-# ---------- เลือกว่าจะกรอกช่องไหน ----------
-st.subheader("Inputs")
+# ---------- แสดงค่า Number 1 / 2 ----------
+st.subheader("Values")
 
-col_disp1, col_disp2 = st.columns(2)
-
-with col_disp1:
+col1, col2 = st.columns(2)
+with col1:
     st.write("**Number 1**")
     st.code(st.session_state.num1_str or " ", language="text")
-
-with col_disp2:
+with col2:
     st.write("**Number 2**")
     st.code(st.session_state.num2_str or " ", language="text")
 
-st.radio(
-    "กำลังกรอกช่อง:",
-    ["Number 1", "Number 2"],
-    key="target_input",
-    horizontal=True,
-)
+# ปุ่มสลับช่องที่กำลังแก้
+target_label = "Number 1" if st.session_state.target == "num1" else "Number 2"
+if st.button(f"กำลังกรอก: {target_label} (กดเพื่อสลับ)"):
+    toggle_target()
 
 # ---------- เลือก operation ----------
 operation = st.selectbox(
@@ -95,6 +94,7 @@ st.markdown("---")
 # ---------- keypad ----------
 st.subheader("Keypad")
 
+# หมายเหตุ: บนมือถือ columns ของ Streamlit จะ stack แนวตั้งเอง
 rows = [
     ["7", "8", "9"],
     ["4", "5", "6"],
@@ -109,7 +109,7 @@ for row in rows:
             if st.button(key, use_container_width=True):
                 press_key(key)
 
-# ปุ่ม Clear แยกไว้ด้านล่าง
+# ปุ่ม Clear
 if st.button("Clear (C)", type="secondary"):
     press_key("C")
 
