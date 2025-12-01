@@ -12,6 +12,15 @@ A simple calculator app built with Streamlit.
 |     Result = 15                  |
 +--------------------------------+
 
+## 🧩 File Structure
+
+```
+📁 simple-streamlit-calculator
+ ├── calculator_app.py   # main Streamlit app
+ ├── requirements.txt    # dependencies
+ └── README.md           # this file
+```
+
 ```
   #####  ##   ##   #######  ##        #####   #######    ###  
  ##   ## ##   ##   ##       ##       ##   ##  ##        ## ## 
