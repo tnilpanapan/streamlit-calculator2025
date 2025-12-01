@@ -1,125 +1,138 @@
 import streamlit as st
 
-st.set_page_config(
-    page_title="Simple Calculator v2.1",
-    page_icon="🧮",
-    layout="centered",
-)
+st.set_page_config(page_title="Calculator v2", layout="centered")
 
-st.title("🧮 Simple Calculator (Keypad ver.)")
-st.write("แป้นกด 0–9, '.' และ '=' เลือกช่องด้วยปุ่มสลับด้านล่าง")
+st.title("Calculator v2 – iPhone style keypad")
 
-# ---------- initial state ----------
-if "num1_str" not in st.session_state:
-    st.session_state.num1_str = ""
-if "num2_str" not in st.session_state:
-    st.session_state.num2_str = ""
-if "result" not in st.session_state:
-    st.session_state.result = None
-if "target" not in st.session_state:
-    st.session_state.target = "num1"   # num1 หรือ num2
+# ---------- Session state ----------
+if "display" not in st.session_state:
+    st.session_state.display = ""
+if "confirmed_value" not in st.session_state:
+    st.session_state.confirmed_value = None
 
-def toggle_target():
-    st.session_state.target = "num2" if st.session_state.target == "num1" else "num1"
 
-# ---------- helper ----------
-def press_key(key: str):
-    # ล้าง
-    if key == "C":
-        st.session_state.num1_str = ""
-        st.session_state.num2_str = ""
-        st.session_state.result = None
-        return
+# ---------- Helper ----------
+def press(key: str):
+    # กดตัวเลข / จุดทศนิยม
+    if key in "0123456789":
+        st.session_state.display += key
 
-    # คำนวณ
-    if key == "=":
-        try:
-            num1 = float(st.session_state.num1_str or "0")
-            num2 = float(st.session_state.num2_str or "0")
-        except ValueError:
-            st.session_state.result = "Input ไม่ถูกต้อง"
-            return
-
-        op = st.session_state.operation
-
-        if op == "+":
-            st.session_state.result = num1 + num2
-        elif op == "-":
-            st.session_state.result = num1 - num2
-        elif op == "*":
-            st.session_state.result = num1 * num2
-        elif op == "/":
-            if num2 == 0:
-                st.session_state.result = "หาร 0 ไม่ได้"
+    elif key == ".":
+        # ไม่ให้มีจุดซ้ำในตัวเลขเดียว
+        if "." not in st.session_state.display:
+            if st.session_state.display == "":
+                # เริ่มด้วย 0.
+                st.session_state.display = "0."
             else:
-                st.session_state.result = num1 / num2
-        return
+                st.session_state.display += "."
 
-    # ต่อ string ตามช่องที่กำลังแก้
-    if st.session_state.target == "num1":
-        if key == "." and "." in st.session_state.num1_str:
-            return
-        st.session_state.num1_str += key
-    else:
-        if key == "." and "." in st.session_state.num2_str:
-            return
-        st.session_state.num2_str += key
+    elif key == "C":
+        st.session_state.display = ""
+        st.session_state.confirmed_value = None
+
+    elif key == "⌫":
+        st.session_state.display = st.session_state.display[:-1]
+
+    elif key == "=":
+        # กดเท่ากับ = แปลงเป็นตัวเลข 1 ค่า
+        text = st.session_state.display
+        if text == "" or text == ".":
+            st.session_state.confirmed_value = None
+        else:
+            try:
+                st.session_state.confirmed_value = float(text)
+            except ValueError:
+                st.session_state.confirmed_value = None
 
 
-# ---------- แสดงค่า Number 1 / 2 ----------
-st.subheader("Values")
-
-col1, col2 = st.columns(2)
-with col1:
-    st.write("**Number 1**")
-    st.code(st.session_state.num1_str or " ", language="text")
-with col2:
-    st.write("**Number 2**")
-    st.code(st.session_state.num2_str or " ", language="text")
-
-# ปุ่มสลับช่องที่กำลังแก้
-target_label = "Number 1" if st.session_state.target == "num1" else "Number 2"
-if st.button(f"กำลังกรอก: {target_label} (กดเพื่อสลับ)"):
-    toggle_target()
-
-# ---------- เลือก operation ----------
-operation = st.selectbox(
-    "Operation",
-    ["+", "-", "*", "/"],
-    key="operation",
+# ---------- Custom CSS ให้ปุ่มดูคล้าย iPhone ----------
+st.markdown(
+    """
+    <style>
+    .keypad-btn > button {
+        width: 100%;
+        height: 64px;
+        font-size: 24px;
+        border-radius: 32px;
+    }
+    .keypad-equal > button {
+        font-weight: 700;
+    }
+    .keypad-func > button {
+        font-weight: 600;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
 )
 
-st.markdown("---")
+# ---------- Display ----------
+st.text_input(
+    "ค่าที่กำลังกรอก",
+    value=st.session_state.display if st.session_state.display != "" else "0",
+    disabled=True,
+)
 
-# ---------- keypad ----------
-st.subheader("Keypad")
+if st.session_state.confirmed_value is not None:
+    st.success(f"ค่าที่กด = {st.session_state.confirmed_value:g}")
 
-# หมายเหตุ: บนมือถือ columns ของ Streamlit จะ stack แนวตั้งเอง
-rows = [
-    ["7", "8", "9"],
-    ["4", "5", "6"],
-    ["1", "2", "3"],
-    ["0", ".", "="],
-]
+st.write("---")
 
-for row in rows:
-    c1, c2, c3 = st.columns(3)
-    for key, col in zip(row, (c1, c2, c3)):
-        with col:
-            if st.button(key, use_container_width=True):
-                press_key(key)
+# ---------- Keypad layout ----------
+# แถว 1: 1 2 3
+row1 = st.columns(3)
+with row1[0]:
+    if st.button("1", key="k1", use_container_width=True):
+        press("1")
+with row1[1]:
+    if st.button("2", key="k2", use_container_width=True):
+        press("2")
+with row1[2]:
+    if st.button("3", key="k3", use_container_width=True):
+        press("3")
 
-# ปุ่ม Clear
-if st.button("Clear (C)", type="secondary"):
-    press_key("C")
+# แถว 2: 4 5 6
+row2 = st.columns(3)
+with row2[0]:
+    if st.button("4", key="k4", use_container_width=True):
+        press("4")
+with row2[1]:
+    if st.button("5", key="k5", use_container_width=True):
+        press("5")
+with row2[2]:
+    if st.button("6", key="k6", use_container_width=True):
+        press("6")
 
-st.markdown("---")
+# แถว 3: 7 8 9
+row3 = st.columns(3)
+with row3[0]:
+    if st.button("7", key="k7", use_container_width=True):
+        press("7")
+with row3[1]:
+    if st.button("8", key="k8", use_container_width=True):
+        press("8")
+with row3[2]:
+    if st.button("9", key="k9", use_container_width=True):
+        press("9")
 
-# ---------- แสดงผลลัพธ์ ----------
-if st.session_state.result is not None:
-    st.success(
-        f"Result: {st.session_state.num1_str or '0'} "
-        f"{st.session_state.operation} "
-        f"{st.session_state.num2_str or '0'} "
-        f"= {st.session_state.result}"
-    )
+# แถว 4: . 0 =
+row4 = st.columns(3)
+with row4[0]:
+    if st.button(".", key="kdot", use_container_width=True):
+        press(".")
+with row4[1]:
+    if st.button("0", key="k0", use_container_width=True):
+        press("0")
+with row4[2]:
+    if st.button("=", key="keq", use_container_width=True):
+        press("=")
+
+# แถว 5: C  ⌫  (ช่องว่าง)
+row5 = st.columns(3)
+with row5[0]:
+    if st.button("C", key="kC", use_container_width=True):
+        press("C")
+with row5[1]:
+    if st.button("⌫", key="kback", use_container_width=True):
+        press("⌫")
+# ช่องขวาสุดปล่อยว่างไว้เฉย ๆ
