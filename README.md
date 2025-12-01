@@ -10,7 +10,6 @@ A simple calculator app built with Streamlit.
 |    [   Calculate   ]             |
 |                                  |
 |     Result = 15                  |
-+--------------------------------+
 
 ## 🧩 File Structure
 
