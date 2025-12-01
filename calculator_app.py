@@ -1,35 +1,42 @@
 import streamlit as st
 
-st.title("Calculator v2 – input ว่างได้")
+st.set_page_config(page_title="Calculator 2 Inputs", layout="centered")
+st.title("Calculator – กรอก 2 ค่า แล้วกด =")
 
-if "confirmed_value" not in st.session_state:
-    st.session_state.confirmed_value = None
+# ----- ช่องกรอกตัวเลข (ใช้ text_input) -----
+x_str = st.text_input("ตัวเลขที่ 1 (x)", value="", placeholder="พิมพ์ตัวเลข…")
+y_str = st.text_input("ตัวเลขที่ 2 (y)", value="", placeholder="พิมพ์ตัวเลข…" )
 
-number_str = st.text_input(
-    "กรอกตัวเลข",
-    value="",              # 🔥 ว่างจริง
-    placeholder="พิมพ์ตัวเลข…",
-    key="current_value"
-)
+# ----- เลือก operator -----
+operator = st.selectbox("เลือกเครื่องหมาย", ["+", "-", "*", "/"])
 
-col1, col2 = st.columns(2)
+# ----- ปุ่มคำนวณ (=) -----
+calculate = st.button(" = ", type="primary")
 
-with col1:
-    if st.button("="):
-        try:
-            st.session_state.confirmed_value = float(number_str)
-        except:
-            st.session_state.confirmed_value = None
+# ----- เมื่อกด = เท่านั้น -----
+if calculate:
+    # ตรวจว่าป้อนเลขถูกต้องไหม
+    try:
+        x = float(x_str)
+        y = float(y_str)
+        valid = True
+    except:
+        valid = False
 
-with col2:
-    if st.button("C"):
-        st.session_state.current_value = ""
-        st.session_state.confirmed_value = None
+    if not valid:
+        st.error("กรุณากรอกตัวเลขให้ถูกต้อง (เป็นค่าว่างหรือข้อความอื่นไม่ได้นะ)")
+    else:
+        # คำนวณตาม operator
+        if operator == "+":
+            result = x + y
+        elif operator == "-":
+            result = x - y
+        elif operator == "*":
+            result = x * y
+        elif operator == "/":
+            if y == 0:
+                result = "หารด้วย 0 ไม่ได้"
+            else:
+                result = x / y
 
-st.write("---")
-
-x = st.session_state.confirmed_value
-if x is not None:
-    st.success(f"ผลลัพธ์ = {x * 2}")
-else:
-    st.info("ยังไม่ได้กด = หรือค่าผิดรูปแบบ")
+        st.success(f"ผลลัพธ์ = {result}")
