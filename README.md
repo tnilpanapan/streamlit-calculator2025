@@ -1,7 +1,6 @@
 # streamlit-calculator2025
 A simple calculator app built with Streamlit.
 
-+--------------------------------+
 |        Simple Calculator        |
 |--------------------------------|
 |  Number 1:  [   10.00   ]      |
