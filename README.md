@@ -15,9 +15,9 @@ A simple calculator app built with Streamlit.
 
 ```
 📁 simple-streamlit-calculator
- ├── calculator_app.py   # main Streamlit app
- ├── requirements.txt    # dependencies
- └── README.md           # this file
+ ├── calculator_app.py   
+ ├── requirements.txt    
+ └── README.md           
 ```
 
 ```
