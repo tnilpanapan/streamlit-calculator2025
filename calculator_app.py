@@ -1,42 +1,61 @@
 import streamlit as st
 
-st.set_page_config(page_title="Calculator 2 Inputs", layout="centered")
-st.title("Calculator – กรอก 2 ค่า แล้วกด =")
+st.set_page_config(page_title="Calculator 3 Inputs", layout="centered")
+st.title("Calculator – x, y, z + เงื่อนไข z")
 
-# ----- ช่องกรอกตัวเลข (ใช้ text_input) -----
+# ---------- ฟังก์ชันคำนวณ ----------
+def compute_results(x_str: str, y_str: str, z_str: str):
+    """
+    รับ string x_str, y_str, z_str
+    แปลง x_str, y_str เป็น float
+    ถ้า z เป็น d หรือ D: x = x * 2
+    ถ้าไม่ใช่: y = y * 10
+    คืนค่า (x_หลังปรับ, y_หลังปรับ, result_1, result_2)
+    """
+
+    # แปลง x, y เป็น float (ถ้าไม่ได้จะ raise ValueError)
+    x = float(x_str)
+    y = float(y_str)
+
+    # ปรับตามค่า z
+    if z_str.lower() == "d":
+        x = x * 2
+    else:
+        y = y * 10
+
+    # คำนวณผลลัพธ์
+    result_1 = x + y
+    result_2 = x - y
+
+    return x, y, result_1, result_2
+
+
+# ---------- ส่วนรับค่า input ----------
 x_str = st.text_input("ตัวเลขที่ 1 (x)", value="", placeholder="พิมพ์ตัวเลข…")
-y_str = st.text_input("ตัวเลขที่ 2 (y)", value="", placeholder="พิมพ์ตัวเลข…" )
+y_str = st.text_input("ตัวเลขที่ 2 (y)", value="", placeholder="พิมพ์ตัวเลข…")
+z_str = st.text_input("ตัวแปรเงื่อนไข (z)", value="", placeholder='เช่น d หรือ D')
 
-# ----- เลือก operator -----
-operator = st.selectbox("เลือกเครื่องหมาย", ["+", "-", "*", "/"])
-
-# ----- ปุ่มคำนวณ (=) -----
+# ปุ่มเท่ากับ
 calculate = st.button(" = ", type="primary")
 
-# ----- เมื่อกด = เท่านั้น -----
+st.write("---")
+
+# ---------- เมื่อกดปุ่ม = ----------
 if calculate:
-    # ตรวจว่าป้อนเลขถูกต้องไหม
+    # เช็คว่ากรอก x, y ถูกเป็นตัวเลขหรือไม่
     try:
-        x = float(x_str)
-        y = float(y_str)
+        x_adj, y_adj, result_1, result_2 = compute_results(x_str, y_str, z_str)
         valid = True
-    except:
+    except ValueError:
         valid = False
 
     if not valid:
-        st.error("กรุณากรอกตัวเลขให้ถูกต้อง (เป็นค่าว่างหรือข้อความอื่นไม่ได้นะ)")
+        st.error("กรุณากรอก x และ y เป็นตัวเลขให้ถูกต้อง")
     else:
-        # คำนวณตาม operator
-        if operator == "+":
-            result = x + y
-        elif operator == "-":
-            result = x - y
-        elif operator == "*":
-            result = x * y
-        elif operator == "/":
-            if y == 0:
-                result = "หารด้วย 0 ไม่ได้"
-            else:
-                result = x / y
+        # แสดงค่า x, y หลังถูกปรับตาม z
+        st.write(f"ค่า x หลังปรับ = {x_adj}")
+        st.write(f"ค่า y หลังปรับ = {y_adj}")
 
-        st.success(f"ผลลัพธ์ = {result}")
+        # แสดง output 2 ช่อง
+        st.success(f"Result_1 = x + y = {result_1}")
+        st.info(f"Result_2 = x - y = {result_2}")
