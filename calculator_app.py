@@ -18,7 +18,7 @@ def compute_results(V_str: str, PC_str: str, D_str: str):
     PC = float(PC_str)
 
     # ปรับตามค่า z
-    if z_str.lower() == "d":
+    if D_str.lower() == "d":
         PC = PC/1.732
     else:
         V = V/1.732
