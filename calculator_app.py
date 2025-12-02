@@ -4,10 +4,10 @@ st.set_page_config(page_title="Calculator 3 Inputs", layout="centered")
 st.title("3-Phases--Calculator")
 
 # ---------- ฟังก์ชันคำนวณ ----------
-def compute_new_V(V_str: str, PC_str: str, D_str: str):
+def compute_new_V(V_str: str, PC_str: str, YorD: str):
   V = float(V_str)
   PC = float(PC_str)
-  if D_str.lower() == "d":
+  if YorD.lower() == "d":
       PC = PC/1.732
   else:
       V = V/1.732
@@ -115,8 +115,7 @@ if calculate:
       
     # ฟังก์ชั่นสี่ ค่าที่เหลือ CON_AREA_A, CS, CJ, SP, SM, SN, T, TX, TC, TURN_SLOT    
     try: 
-        CON_AREA_A, CS_adj, CJ_adj, SP_adj, SM_adj, SN_adj,T_adj,TX_adj,TC_adj,TURN_SLOT = 
-        compute_other(A_adj, V_adj,PC_adj,P,S, DI,L,B,PA,TX_adj,T_adj) 
+        CON_AREA_A, CS_adj, CJ_adj, SP_adj, SM_adj, SN_adj,T_adj,TX_adj,TC_adj,TURN_SLOT = compute_other(A_adj, V_adj,PC_adj,P,S, DI,L,B,PA,TX_adj,T_adj) 
                                                   
         valid = True
     except ValueError:
@@ -133,6 +132,7 @@ if calculate:
         # แสดง output
         st.success(f"V = x + y = {V_adj}")
         st.info(f"PC = x - y = {PC_adj}")
+        print("success")
 
         # ตรวจสอบทีละขั้นตอนที่คำนวณค่า
         st.write(f"ค่า V หลัง Y OR D บรรทัด 10 = {V_adj}")
