@@ -14,7 +14,8 @@ def compute_new_V(V_str: str, PC_str: str, YorD: str):
 
   return V, PC
 
-def compute_PM_T_TX(B_str: str, DI_str: str, L_str: str, P_str: str, PA_str: str):
+def compute_PM_T_TX(V_str: str, B_str: str, DI_str: str, L_str: str, P_str: str, PA_str: str):
+  V = float(V_str)
   B = float(B_str)
   DI = float(DI_str)
   L = float(L_str)
@@ -95,7 +96,7 @@ if calculate:
         st.error("F1 กรุณากรอก V และ PC เป็นตัวเลข และ กรอก (Y/D)? ให้ถูกต้อง")
     # ฟังก์ชั่นสอง PM,T,TX
     try:
-        PM_adj, T_adj, TX_adj = compute_PM_T_TX(B, DI, L, P, PA)
+        PM_adj, T_adj, TX_adj = compute_PM_T_TX(V_adj, B, DI, L, P, PA)
         valid = True
     except ValueError:
         valid = False
