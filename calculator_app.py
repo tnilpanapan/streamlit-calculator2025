@@ -55,9 +55,9 @@ def compute_other(A_adj, V_adj,PC_adj,P,S, DI,L,B,PA,TX_adj,T_adj):
   TC = TX/SM
   CON_AREA_A = A*PA
   TURN_SLOT = CS*PA
-  return CON_AREA_A, CS, CJ, SP, SM, SN, T, TX, TC, TURN_SLOT
+  return CON_AREA_A, CS, CJ, SP, SM, SN, TC, TURN_SLOT
 
-def parse_list(text, expected_n=None, dtype=float):
+def parse_list(text, expected_n=None, dtype=float): #ถ้ามีสายอักขระมาเป็นชุด คั่นด้วย คอมม่า หรือ ช่องว่าง จะ return เป็น list ได้อย่างไร
     if text is None:
         return []
 
@@ -96,7 +96,7 @@ B = st.text_input("FLUX DEN (B)", value="", placeholder="พิมพ์ตั�
 J = st.text_input("DIFF CON SIZE IN (J)",  value="", placeholder="พิมพ์ตัวเลขจำนวนเต็ม เช่น 1, 2, 3 ...")
 #For J
 CI = st.text_input("NO OF CONDUCTOR (CI)" "\n" "กรอกหลายค่า คั่นด้วยช่องว่างหรือคอมม่า", value="", placeholder="ใส่ตัวเลขหลายค่า (ใช้ space หรือ , คั่น)")
-DA = st.text_input("SIZE NO OF DIAMETER (DA) ใช้เว้นวรรคหรือคอมม่าเพื่อใส่ค่าที่ต่างกัน", value="", placeholder="ใส่ตัวเลขหลายค่า (ใช้ space หรือ , คั่น)")
+DA = st.text_input("SIZE NO OF DIAMETER (DA) กรอกหลายค่า คั่นด้วยช่องว่างหรือคอมม่า", value="", placeholder="ใส่ตัวเลขหลายค่า (ใช้ space หรือ , คั่น)")
 
 
 # ปุ่มเท่ากับ
@@ -151,9 +151,9 @@ if calculate:
     if not valid:
         st.error("F3 กรุณากรอก J เป็นตัวเลข ให้ถูกต้อง")\
 
-    # ฟังก์ชั่นสี่ ค่าที่เหลือ CON_AREA_A, CS, CJ, SP, SM, SN, T, TX, TC, TURN_SLOT
+    # ฟังก์ชั่นสี่ ค่าที่เหลือ CON_AREA_A, CS, CJ, SP, SM, SN, TC, TURN_SLOT
     try:
-        CON_AREA_A, CS_out, CJ_out, SP_out, SM_out, SN_out,T_out,TX_out,TC_out,TURN_SLOT = compute_other(A_adj, V_adj,PC_adj,P,S, DI,L,B,PA,TX_adj,T_adj)
+        CON_AREA_A, CS_out, CJ_out, SP_out, SM_out, SN_out,TC_out,TURN_SLOT = compute_other(A_adj, V_adj,PC_adj,P,S, DI,L,B,PA,TX_adj,T_adj)
 
         valid = True
     except ValueError:
@@ -163,17 +163,32 @@ if calculate:
         st.error("F4 กรุณากรอก ค่าต่างๆ เป็นตัวเลข ให้ถูกต้อง")
 
 
-
-
-
     if valid:
         # แสดง output
-        st.success(f"V = {V_adj}")
-        st.info(f"PC = {PC_adj}")
-        st.success(f"Area = {A_adj}")
-        print("success")
+        st.write("กรุณาแจ้งตัวเลข บรรทัดที่คำนวณผิดพลาด")
+        st.success(f"10.ค่า CUR DEN = {CJ_out} A/SQ.MM. (หน่วย)")
+        st.success(f"11.ค่า SLOT/POLE SP = {SP_out}")
+        st.success(f"12.ค่า SLOT/POLE/PHASE SM = {SM_out}")
+        st.success(f"13.ค่า SN = {SN_out}")
+        st.success(f"14.ค่า COIL SPAN = 1 - {SN_out}")
+        st.success(f"15.ค่า TURN/PHASE T = {T_adj}")
+        st.success(f"16.ค่า TURN/POLE TX = {TX_adj}")
+        st.success(f"17.ค่า TURN/COIL TC = {TC_out}")
+        st.success(f"18.ค่า TURN/SLOT CS*PA = {TURN_SLOT}")
 
         # ตรวจสอบทีละขั้นตอนที่คำนวณค่า
-        st.write(f"ค่า V หลัง Y OR D บรรทัด 10 = {V_adj}")
-        st.write(f"ค่า PC หลัง Y OR D บรรทัด 10 = {PC_adj}")
+        st.write("ตรวจคำตอบทีละขั้นตอน")
+        st.write(f"1. ค่า V หลังเงื่อนไข Y OR D (บรรทัด 10) = {V_adj}")
+        st.write(f"2. ค่า PC หลังเงื่อน Y OR D (บรรทัด 10) = {PC_adj}")
+        st.write(f"3. ค่า PM = {PM_adj}")
+        st.write(f"4. ค่า T = {T_adj}")
+        st.write(f"5. ค่า TX = {TX_adj}")
+        st.write(f"6. ค่า A หลัง loop J = {A_adj}")
+        st.write(f"7. ค่า CS = {CS_out}")
+        st.write(f"8. ค่า CON AREA A = {CON_AREA_A}")
+        st.write(f"9. ค่า CJ = {CJ_out}")
+        
+        
+
+        
 
