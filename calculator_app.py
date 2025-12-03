@@ -133,8 +133,8 @@ if calculate:
     except:
         st.error("J error: กรุณากรอก J เป็นจำนวนเต็ม เช่น 1, 2, 3 ...")
         st.stop()
-    CI_list = parse_list(CI, expected_n=J)
-    DA_list = parse_list(DA, expected_n=J)
+    CI_list = parse_list(CI, expected_n=J_int)
+    DA_list = parse_list(DA, expected_n=J_int)
     if CI_list is None:
         st.error("รูปแบบข้อมูล CI ไม่ถูกต้อง หรือค่าจำนวนไม่ตรง J")
         st.stop()
