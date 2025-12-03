@@ -36,7 +36,7 @@ def compute_Area(CI_str: str, DA_str: str, J_str: str):
     A = A + AI
   return A
 
-def compute_other(A_adj, V_adj,PC_adj,P: str,S: str, DI: str,L: str,B: str,PA :str, 
+def compute_other(A_adj, V_adj,PC_adj,P: str,S: str, DI: str,L: str,B: str,PA :str,
                   TX_adj,T_adj):
   A = A_adj
   V = V_adj
@@ -72,10 +72,10 @@ S = st.text_input("NO OF SLOT S", value="", placeholder="พิมพ์ตั�
 PA = st.text_input("NO OF PARALLEL PA", value="", placeholder="พิมพ์ตัวเลขจำนวนเต็ม")
 B = st.text_input("FLUX DEN B", value="", placeholder="พิมพ์ตัวเลข…")
 
-J = st.text_input("DIFF CON SIZE IN //", value="", placeholder="พิมพ์ตัวเลขจำนวนเต็ม")
+J = st.text_input("DIFF CON SIZE IN //",  value="", placeholder="พิมพ์ตัวเลขจำนวนเต็ม เช่น 1, 2, 3 ...")
 #For J
-CI = st.text_input("NO OF CONDUCTOR", value="", placeholder="พิมพ์ตัวเลขจำนวนเต็ม")
-DA = st.text_input("SIZE NO OF DIAMETER", value="", placeholder="พิมพ์ตัวเลข…")
+CI = st.text_input("NO OF CONDUCTOR" "\n" "กรอกหลายค่า คั่นด้วยช่องว่างหรือคอมม่า", value="", placeholder="ใส่ตัวเลขหลายค่า (ใช้ space หรือ , คั่น)")
+DA = st.text_input("SIZE NO OF DIAMETER ใช้เว้นวรรคหรือคอมม่าเพื่อใส่ค่าที่ต่างกัน", value="", placeholder="ใส่ตัวเลขหลายค่า (ใช้ space หรือ , คั่น)")
 
 
 # ปุ่มเท่ากับ
@@ -91,7 +91,7 @@ if calculate:
         valid = True
     except ValueError:
         valid = False
-    
+
     if not valid:
         st.error("F1 กรุณากรอก V และ PC เป็นตัวเลข และ กรอก (Y/D)? ให้ถูกต้อง")
     # ฟังก์ชั่นสอง PM,T,TX
@@ -103,35 +103,45 @@ if calculate:
 
     if not valid:
         st.error("F2 กรุณากรอก B, DI, L, P, PA เป็นตัวเลข ให้ถูกต้อง")
-    # ฟังก์ชั่นสาม loop J 
+    # ฟังก์ชั่นสาม loop J
+    CI_str = parse_list(CI, expected_n=J)
+    DA_str = parse_list(DA, expected_n=J)
+    if CI_str is None:
+        st.error("รูปแบบข้อมูล CI ไม่ถูกต้อง หรือค่าจำนวนไม่ตรง J")
+        st.stop()
+    if DA_str is None:
+        st.error("รูปแบบข้อมูล DA ไม่ถูกต้อง หรือค่าจำนวนไม่ตรง J")
+        st.stop()
+
     try:
-        A_adj = compute_Area(CI, DA, J)
+        A_adj = compute_Area(CI_str, DA_str, J)
         valid = True
     except ValueError:
         valid = False
 
     if not valid:
-        st.error("F3 กรุณากรอก CI, DA, J เป็นตัวเลข ให้ถูกต้อง")\
-      
-    # ฟังก์ชั่นสี่ ค่าที่เหลือ CON_AREA_A, CS, CJ, SP, SM, SN, T, TX, TC, TURN_SLOT    
-    try: 
-        CON_AREA_A, CS_adj, CJ_adj, SP_adj, SM_adj, SN_adj,T_adj,TX_adj,TC_adj,TURN_SLOT = compute_other(A_adj, V_adj,PC_adj,P,S, DI,L,B,PA,TX_adj,T_adj) 
-                                                  
+        st.error("F3 กรุณากรอก J เป็นตัวเลข ให้ถูกต้อง")\
+
+    # ฟังก์ชั่นสี่ ค่าที่เหลือ CON_AREA_A, CS, CJ, SP, SM, SN, T, TX, TC, TURN_SLOT
+    try:
+        CON_AREA_A, CS_adj, CJ_adj, SP_adj, SM_adj, SN_adj,T_adj,TX_adj,TC_adj,TURN_SLOT = compute_other(A_adj, V_adj,PC_adj,P,S, DI,L,B,PA,TX_adj,T_adj)
+
         valid = True
     except ValueError:
         valid = False
 
     if not valid:
         st.error("F4 กรุณากรอก ค่าต่างๆ เป็นตัวเลข ให้ถูกต้อง")
-    
+
 
 
 
 
     if valid:
         # แสดง output
-        st.success(f"V = x + y = {V_adj}")
-        st.info(f"PC = x - y = {PC_adj}")
+        st.success(f"V = {V_adj}")
+        st.info(f"PC = {PC_adj}")
+        st.success(f"Area = {A_adj}")
         print("success")
 
         # ตรวจสอบทีละขั้นตอนที่คำนวณค่า
