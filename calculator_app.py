@@ -165,16 +165,16 @@ if calculate:
 
     if valid:
         # แสดง output
-        st.write("กรุณาแจ้งตัวเลข บรรทัดที่คำนวณผิดพลาด")
-        st.success(f"10.ค่า CUR DEN = {CJ_out} A/SQ.MM. (หน่วย)")
-        st.success(f"11.ค่า SLOT/POLE SP = {SP_out}")
-        st.success(f"12.ค่า SLOT/POLE/PHASE SM = {SM_out}")
-        st.success(f"13.ค่า SN = {SN_out}")
-        st.success(f"14.ค่า COIL SPAN = 1 - {SN_out}")
-        st.success(f"15.ค่า TURN/PHASE T = {T_adj}")
-        st.success(f"16.ค่า TURN/POLE TX = {TX_adj}")
-        st.success(f"17.ค่า TURN/COIL TC = {TC_out}")
-        st.success(f"18.ค่า TURN/SLOT CS*PA = {TURN_SLOT}")
+        st.write("กรุณาแจ้งตัวเลข บรรทัดที่คำนวณผิดพลาด"
+        st.success(f"10. CUR DEN =  {CJ_out}  A/SQ.MM.")
+        st.info(f"11. SLOT/POLE SP =  {SP_out}")
+        st.success(f"12. SLOT/POLE/PHASE SM =  {SM_out}")
+        st.info(f"13. SN =  {SN_out}")
+        st.success(f"14. COIL SPAN =  1 - {SN_out}")
+        st.info(f"15. TURN/PHASE T =  {T_adj}")
+        st.success(f"16. TURN/POLE TX =  {TX_adj}")
+        st.info(f"17. TURN/COIL TC =  {TC_out}")
+        st.success(f"18. TURN/SLOT CS*PA =  {TURN_SLOT}")
 
         # ตรวจสอบทีละขั้นตอนที่คำนวณค่า
         st.write("ตรวจคำตอบทีละขั้นตอน")
