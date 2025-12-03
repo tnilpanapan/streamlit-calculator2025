@@ -125,6 +125,14 @@ if calculate:
     if not valid:
         st.error("F2 กรุณากรอก B, DI, L, P, PA เป็นตัวเลข ให้ถูกต้อง")
     # ฟังก์ชั่นสาม loop J
+    if J.strip() == "":
+      st.error("กรุณากรอกค่า J ก่อน")
+      st.stop()
+    try:
+        J_int = int(J)
+    except:
+        st.error("J error: กรุณากรอก J เป็นจำนวนเต็ม เช่น 1, 2, 3 ...")
+        st.stop()
     CI_list = parse_list(CI, expected_n=J)
     DA_list = parse_list(DA, expected_n=J)
     if CI_list is None:
