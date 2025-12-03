@@ -36,8 +36,7 @@ def compute_Area(CI_str: str, DA_str: str, J_str: str):
     A = A + AI
   return A
 
-def compute_other(A_adj, V_adj,PC_adj,P: str,S: str, DI: str,L: str,B: str,PA :str,
-                  TX_adj,T_adj):
+def compute_other(A_adj, V_adj,PC_adj,P,S, DI,L,B,PA,TX_adj,T_adj):
   A = A_adj
   V = V_adj
   PC = PC_adj
@@ -124,7 +123,7 @@ if calculate:
 
     # ฟังก์ชั่นสี่ ค่าที่เหลือ CON_AREA_A, CS, CJ, SP, SM, SN, T, TX, TC, TURN_SLOT
     try:
-        CON_AREA_A, CS_adj, CJ_adj, SP_adj, SM_adj, SN_adj,T_adj,TX_adj,TC_adj,TURN_SLOT = compute_other(A_adj, V_adj,PC_adj,P,S, DI,L,B,PA,TX_adj,T_adj)
+        CON_AREA_A, CS_out, CJ_out, SP_out, SM_out, SN_out,T_out,TX_out,TC_out,TURN_SLOT = compute_other(A_adj, V_adj,PC_adj,P,S, DI,L,B,PA,TX_adj,T_adj)
 
         valid = True
     except ValueError:
