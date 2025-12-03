@@ -165,7 +165,7 @@ if calculate:
 
     if valid:
         # แสดง output
-        st.write("กรุณาแจ้งตัวเลข บรรทัดที่คำนวณผิดพลาด"
+        st.write("กรุณาแจ้งตัวเลข บรรทัดที่คำนวณผิดพลาด")
         st.success(f"10. CUR DEN =  {CJ_out}  A/SQ.MM.")
         st.info(f"11. SLOT/POLE SP =  {SP_out}")
         st.success(f"12. SLOT/POLE/PHASE SM =  {SM_out}")
