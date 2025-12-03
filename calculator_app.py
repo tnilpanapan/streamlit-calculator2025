@@ -27,13 +27,11 @@ def compute_PM_T_TX(V_str: str, B_str: str, DI_str: str, L_str: str, P_str: str,
 
   return PM, T, TX
 
-def compute_Area(CI_str: str, DA_str: str, J_str: str):
-  CI = float(CI_str)
-  DA = float(DA_str)
+def compute_Area(CI: list, DA: list, J_str: str):
   J = int(J_str)
   A = 0
   for i in range(J):
-    AI = CI*3.14159*(DA**2)/4.0
+    AI = CI[i]*3.14159*(DA[i]**2)/4.0
     A = A + AI
   return A
 
@@ -59,23 +57,46 @@ def compute_other(A_adj, V_adj,PC_adj,P,S, DI,L,B,PA,TX_adj,T_adj):
   TURN_SLOT = CS*PA
   return CON_AREA_A, CS, CJ, SP, SM, SN, T, TX, TC, TURN_SLOT
 
+def parse_list(text, expected_n=None, dtype=float):
+    if text is None:
+        return []
+
+    # ให้รองรับการใส่ comma หรือ space คั่น
+    text = text.replace(",", " ")
+    tokens = [t.strip() for t in text.split() if t.strip() != ""]
+
+    if len(tokens) == 0:
+        return []
+
+    try:
+        values = [dtype(t) for t in tokens]
+    except:
+        raise ValueError("กรุณาใส่ตัวเลขเท่านั้น (คั่นด้วย space หรือ comma)")
+
+    if expected_n is not None and len(values) != expected_n:
+        raise ValueError(
+            f"จำนวนค่าที่ใส่ ({len(values)}) ไม่ตรงกับ J = {expected_n}"
+        )
+
+    return values
+
 
 # ---------- ส่วนรับค่า input ----------
-V = st.text_input("PRI VOL V", value="", placeholder="พิมพ์ตัวเลข…")
-PC = st.text_input("PRI CUR I", value="", placeholder="พิมพ์ตัวเลข…")
+V = st.text_input("PRI VOL (V)", value="", placeholder="พิมพ์ตัวเลข…")
+PC = st.text_input("PRI CUR I (PC)", value="", placeholder="พิมพ์ตัวเลข…")
 YorD = st.text_input("INPUT VOL Y OR D", value="", placeholder='(Y/D)? หรือ (y/d)?')
-DI = st.text_input("DIAMETER D MM.", value="", placeholder="พิมพ์ตัวเลข…")
-L = st.text_input("CORE LENGTH L MM.", value="", placeholder="พิมพ์ตัวเลข…")
-P = st.text_input("NO OF POLE P", value="", placeholder="พิมพ์ตัวเลขจำนวนเต็ม")
-S = st.text_input("NO OF SLOT S", value="", placeholder="พิมพ์ตัวเลขจำนวนเต็ม")
+DI = st.text_input("DIAMETER D MM. (DI)", value="", placeholder="พิมพ์ตัวเลข…")
+L = st.text_input("CORE LENGTH L MM. (L)", value="", placeholder="พิมพ์ตัวเลข…")
+P = st.text_input("NO OF POLE (P)", value="", placeholder="พิมพ์ตัวเลขจำนวนเต็ม")
+S = st.text_input("NO OF SLOT (S)", value="", placeholder="พิมพ์ตัวเลขจำนวนเต็ม")
 
-PA = st.text_input("NO OF PARALLEL PA", value="", placeholder="พิมพ์ตัวเลขจำนวนเต็ม")
-B = st.text_input("FLUX DEN B", value="", placeholder="พิมพ์ตัวเลข…")
+PA = st.text_input("NO OF PARALLEL (PA)", value="", placeholder="พิมพ์ตัวเลขจำนวนเต็ม")
+B = st.text_input("FLUX DEN (B)", value="", placeholder="พิมพ์ตัวเลข…")
 
-J = st.text_input("DIFF CON SIZE IN //",  value="", placeholder="พิมพ์ตัวเลขจำนวนเต็ม เช่น 1, 2, 3 ...")
+J = st.text_input("DIFF CON SIZE IN (J)",  value="", placeholder="พิมพ์ตัวเลขจำนวนเต็ม เช่น 1, 2, 3 ...")
 #For J
-CI = st.text_input("NO OF CONDUCTOR" "\n" "กรอกหลายค่า คั่นด้วยช่องว่างหรือคอมม่า", value="", placeholder="ใส่ตัวเลขหลายค่า (ใช้ space หรือ , คั่น)")
-DA = st.text_input("SIZE NO OF DIAMETER ใช้เว้นวรรคหรือคอมม่าเพื่อใส่ค่าที่ต่างกัน", value="", placeholder="ใส่ตัวเลขหลายค่า (ใช้ space หรือ , คั่น)")
+CI = st.text_input("NO OF CONDUCTOR (CI)" "\n" "กรอกหลายค่า คั่นด้วยช่องว่างหรือคอมม่า", value="", placeholder="ใส่ตัวเลขหลายค่า (ใช้ space หรือ , คั่น)")
+DA = st.text_input("SIZE NO OF DIAMETER (DA) ใช้เว้นวรรคหรือคอมม่าเพื่อใส่ค่าที่ต่างกัน", value="", placeholder="ใส่ตัวเลขหลายค่า (ใช้ space หรือ , คั่น)")
 
 
 # ปุ่มเท่ากับ
@@ -104,17 +125,17 @@ if calculate:
     if not valid:
         st.error("F2 กรุณากรอก B, DI, L, P, PA เป็นตัวเลข ให้ถูกต้อง")
     # ฟังก์ชั่นสาม loop J
-    CI_str = parse_list(CI, expected_n=J)
-    DA_str = parse_list(DA, expected_n=J)
-    if CI_str is None:
+    CI_list = parse_list(CI, expected_n=J)
+    DA_list = parse_list(DA, expected_n=J)
+    if CI_list is None:
         st.error("รูปแบบข้อมูล CI ไม่ถูกต้อง หรือค่าจำนวนไม่ตรง J")
         st.stop()
-    if DA_str is None:
+    if DA_list is None:
         st.error("รูปแบบข้อมูล DA ไม่ถูกต้อง หรือค่าจำนวนไม่ตรง J")
         st.stop()
 
     try:
-        A_adj = compute_Area(CI_str, DA_str, J)
+        A_adj = compute_Area(CI_list, DA_list, J)
         valid = True
     except ValueError:
         valid = False
