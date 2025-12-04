@@ -1,7 +1,30 @@
 import streamlit as st
+from datetime import datetime
+
+# ===== CSS ตัวใหญ่ =====
+st.markdown("""
+<style>
+.big-text {
+    font-size: 26px !important;
+    font-weight: 700;
+}
+
+/* ขนาดตัวอักษรในช่อง text_input */
+input[type="text"] {
+    font-size: 24px !important;
+    padding: 6px 10px !important;
+}
+
+/* label ก่อน input */
+.stTextInput label {
+    font-size: 22px !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 
 st.set_page_config(page_title="Calculator 3 Inputs", layout="centered")
-st.title("3-Phases--Calculator")
+st.title("3-Phase M-Calculator")
 
 # ---------- ฟังก์ชันคำนวณ ----------
 def compute_new_V(V_str: str, PC_str: str, YorD: str):
@@ -80,6 +103,8 @@ def parse_list(text, expected_n=None, dtype=float): #ถ้ามีสายอ
 
     return values
 
+# ---------- ใช้งานปรับขนาดอักษรตาม CSS ----------
+st.markdown('<div class="big-text">ผลลัพธ์ขนาดใหญ่</div>', unsafe_allow_html=True)
 
 # ---------- ส่วนรับค่า input ----------
 V = st.text_input("PRI VOL (V)", value="", placeholder="พิมพ์ตัวเลข…")
@@ -149,7 +174,8 @@ if calculate:
         valid = False
 
     if not valid:
-        st.error("F3 กรุณากรอก J เป็นตัวเลข ให้ถูกต้อง")\
+        st.error("F3 กรุณากรอก J เป็นตัวเลข ให้ถูกต้อง")
+        st.stop()
 
     # ฟังก์ชั่นสี่ ค่าที่เหลือ CON_AREA_A, CS, CJ, SP, SM, SN, TC, TURN_SLOT
     try:
@@ -161,34 +187,35 @@ if calculate:
 
     if not valid:
         st.error("F4 กรุณากรอก ค่าต่างๆ เป็นตัวเลข ให้ถูกต้อง")
+        st.stop()
 
 
     if valid:
         # แสดง output
         st.write("กรุณาแจ้งตัวเลข บรรทัดที่คำนวณผิดพลาด")
-        st.success(f"10. CUR DEN =  {CJ_out}  A/SQ.MM.")
-        st.info(f"11. SLOT/POLE SP =  {SP_out}")
-        st.success(f"12. SLOT/POLE/PHASE SM =  {SM_out}")
-        st.info(f"13. SN =  {SN_out}")
-        st.success(f"14. COIL SPAN =  1 - {SN_out}")
-        st.info(f"15. TURN/PHASE T =  {T_adj}")
-        st.success(f"16. TURN/POLE TX =  {TX_adj}")
-        st.info(f"17. TURN/COIL TC =  {TC_out}")
-        st.success(f"18. TURN/SLOT CS*PA =  {TURN_SLOT}")
 
         # ตรวจสอบทีละขั้นตอนที่คำนวณค่า
         st.write("ตรวจคำตอบทีละขั้นตอน")
-        st.write(f"1. ค่า V หลังเงื่อนไข Y OR D (บรรทัด 10) = {V_adj}")
-        st.write(f"2. ค่า PC หลังเงื่อน Y OR D (บรรทัด 10) = {PC_adj}")
-        st.write(f"3. ค่า PM = {PM_adj}")
-        st.write(f"4. ค่า T = {T_adj}")
-        st.write(f"5. ค่า TX = {TX_adj}")
-        st.write(f"6. ค่า A หลัง loop J = {A_adj}")
-        st.write(f"7. ค่า CS = {CS_out}")
-        st.write(f"8. ค่า CON AREA A = {CON_AREA_A}")
-        st.write(f"9. ค่า CJ = {CJ_out}")
-        
-        
+        st.write(f"1. ค่า V หลังเงื่อนไข Y OR D =  {V_adj}")
+        st.write(f"2. ค่า PC หลังเงื่อน Y OR D =  {PC_adj}")
+        st.write(f"3. ค่า PM =  {PM_adj}")
+        st.write(f"4. ค่า T =  {T_adj}")
+        st.write(f"5. ค่า TX =  {TX_adj}")
+        st.write(f"6. ค่า A หลัง loop J =  {A_adj}")
+        st.write(f"7. ค่า  CS =  {CS_out}")
+        st.write(f"8. ค่า CON AREA A =  {CON_AREA_A}")
+        st.write(f"9. ค่า  CJ =  {CJ_out}")
+        st.write(f"10. CUR DEN =   {CJ_out}   A/SQ.MM.")
+        st.write(f"11. SLOT/POLE  SP =  {SP_out}")
+        st.write(f"12. SLOT/POLE/PHASE  SM =  {SM_out}")
+        st.write(f"13. SN =  {SN_out}")
+        st.write(f"14. COIL SPAN =  1 -  {SN_out}")
+        st.write(f"15. TURN/PHASE  T =  {T_adj}")
+        st.write(f"16. TURN/POLE  TX =  {TX_adj}")
+        st.write(f"17. TURN/COIL  TC =  {TC_out}")
+        st.write(f"18. TURN/SLOT  CS*PA =  {TURN_SLOT}")
 
-        
+
+
+
 
