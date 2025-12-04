@@ -5,24 +5,23 @@ from datetime import datetime
 st.markdown("""
 <style>
 
-    /* ===== ปรับ label ของ st.text_input ===== */
+    /* ===== ปรับ label ของ st.text_input() ===== */
     .stTextInput label {
         font-size: 24px !important;
         font-weight: 600 !important;
-        line-height: 1.3 !important;
     }
 
-    /* ===== ปรับข้อความในช่อง input (รวม placeholder) ===== */
-    input[type="text"] {
+    /* ===== ปรับข้อความที่พิมพ์ในช่อง input ===== */
+    .stTextInput input {
         font-size: 22px !important;
         padding: 8px 12px !important;
     }
 
-    /* ===== ปรับข้อความจาก st.write(), st.markdown(), st.text() ===== */
-    .stMarkdown, .stText, .stWrite {
+    /* ===== ปรับข้อความที่ออกจาก st.write(), st.markdown(), st.text() ===== */
+    .stMarkdown p, .stText p, .stWrite p {
         font-size: 22px !important;
-        line-height: 1.5 !important;
         font-weight: 500 !important;
+        line-height: 1.4 !important;
     }
 
 </style>
@@ -123,10 +122,10 @@ S = st.text_input("NO OF SLOT (S)", value="", placeholder="พิมพ์ตั
 PA = st.text_input("NO OF PARALLEL (PA)", value="", placeholder="พิมพ์ตัวเลขจำนวนเต็ม")
 B = st.text_input("FLUX DEN (B)", value="", placeholder="พิมพ์ตัวเลข…")
 
-J = st.text_input("DIFF CON SIZE IN (J)",  value="", placeholder="พิมพ์ตัวเลขจำนวนเต็ม เช่น 1, 2, 3 ...")
+J = st.text_input("DIFF CON SIZE IN (J)",  value="", placeholder="เลขจำนวนเต็ม เช่น 1, 2, 3 ...")
 #For J
-CI = st.text_input("NO OF CONDUCTOR (CI)" "\n" "กรอกหลายค่า คั่นด้วยช่องว่างหรือคอมม่า", value="", placeholder="ใส่ตัวเลขหลายค่า (ใช้ space หรือ , คั่น)")
-DA = st.text_input("SIZE NO OF DIAMETER (DA) กรอกหลายค่า คั่นด้วยช่องว่างหรือคอมม่า", value="", placeholder="ใส่ตัวเลขหลายค่า (ใช้ space หรือ , คั่น)")
+CI = st.text_input("NO OF CONDUCTOR (CI)" "\n" "กรอกหลายค่า คั่นด้วยช่องว่างหรือคอมม่า", value="", placeholder="หลายค่า (ใช้ space หรือ , คั่น)")
+DA = st.text_input("SIZE NO OF DIAMETER (DA) กรอกหลายค่า คั่นด้วยช่องว่างหรือคอมม่า", value="", placeholder="หลายค่า (ใช้ space หรือ , คั่น)")
 
 
 # ปุ่มเท่ากับ
