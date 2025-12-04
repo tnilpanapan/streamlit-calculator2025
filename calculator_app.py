@@ -101,7 +101,7 @@ def parse_list(text, expected_n=None, dtype=float): #ถ้ามีสายอ
     try:
         values = [dtype(t) for t in tokens]
     except:
-        raise ValueError("กรุณาใส่ตัวเลขเท่านั้น (คั่นด้วย space หรือ comma)")
+        raise ValueError("กรุณาใส่ตัวเลขเท่านั้น (คั่นด้วย เว้นวรรค หรือ comma)")
 
     if expected_n is not None and len(values) != expected_n:
         raise ValueError(
@@ -113,21 +113,21 @@ def parse_list(text, expected_n=None, dtype=float): #ถ้ามีสายอ
 
 
 # ---------- ส่วนรับค่า input ----------
-V = st.text_input("PRI VOL (V)", value="", placeholder="พิมพ์ตัวเลข…")
-PC = st.text_input("PRI CUR I (PC)", value="", placeholder="พิมพ์ตัวเลข…")
-YorD = st.text_input("INPUT VOL Y OR D", value="", placeholder='(Y/D)? หรือ (y/d)?')
-DI = st.text_input("DIAMETER D MM. (DI)", value="", placeholder="พิมพ์ตัวเลข…")
-L = st.text_input("CORE LENGTH L MM. (L)", value="", placeholder="พิมพ์ตัวเลข…")
-P = st.text_input("NO OF POLE (P)", value="", placeholder="พิมพ์ตัวเลขจำนวนเต็ม")
-S = st.text_input("NO OF SLOT (S)", value="", placeholder="พิมพ์ตัวเลขจำนวนเต็ม")
+V = st.text_input("PRI VOL (V)", value="", placeholder="ค่า V")
+PC = st.text_input("PRI CUR I (PC)", value="", placeholder="ค่า PC")
+YorD = st.text_input("INPUT VOL Y OR D", value="", placeholder="เลือก Y/D (ตามโปรแกรมเดิม)")
+DI = st.text_input("DIAMETER D MM. (DI)", value="", placeholder="ค่า DI")
+L = st.text_input("CORE LENGTH L MM. (L)", value="", placeholder="ค่า L")
+P = st.text_input("NO OF POLE (P)", value="", placeholder="ค่า P")
+S = st.text_input("NO OF SLOT (S)", value="", placeholder="ค่า S")
 
-PA = st.text_input("NO OF PARALLEL (PA)", value="", placeholder="พิมพ์ตัวเลขจำนวนเต็ม")
-B = st.text_input("FLUX DEN (B)", value="", placeholder="พิมพ์ตัวเลข…")
+PA = st.text_input("NO OF PARALLEL (PA)", value="", placeholder="ค่า PA")
+B = st.text_input("FLUX DEN (B)", value="", placeholder="ค่า B")
 
-J = st.text_input("DIFF CON SIZE IN (J)",  value="", placeholder="เลขจำนวนเต็ม เช่น 1, 2, 3 ...")
+J = st.text_input("DIFF CON SIZE IN (J)",  value="", placeholder="ค่า J เช่น 1, 2, 3 ...")
 #For J
-CI = st.text_input("NO OF CONDUCTOR (CI) \n กรอกหลายค่า คั่นด้วยช่องว่างหรือคอมม่า", value="", placeholder="หลายค่า (ใช้ space หรือ , คั่น)")
-DA = st.text_input("SIZE NO OF DIAMETER (DA) \n กรอกหลายค่า คั่นด้วยช่องว่างหรือคอมม่า", value="", placeholder="หลายค่า (ใช้ space หรือ , คั่น)")
+CI = st.text_input("NO OF CONDUCTOR (CI) \n กรอกหลายค่า คั่นด้วยช่องว่างหรือคอมม่า", value="", placeholder="คั่นด้วย (เว้นวรรค หรือ , comma)")
+DA = st.text_input("SIZE NO OF DIAMETER (DA) \n กรอกหลายค่า คั่นด้วยช่องว่างหรือคอมม่า", value="", placeholder="คั่นด้วย (เว้นวรรค หรือ , comma)")
 
 
 # ปุ่มเท่ากับ
