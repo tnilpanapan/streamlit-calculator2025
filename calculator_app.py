@@ -4,21 +4,27 @@ from datetime import datetime
 # ===== CSS ตัวใหญ่ =====
 st.markdown("""
 <style>
-.big-text {
-    font-size: 26px !important;
-    font-weight: 700;
-}
 
-/* ขนาดตัวอักษรในช่อง text_input */
-input[type="text"] {
-    font-size: 24px !important;
-    padding: 6px 10px !important;
-}
+    /* ===== ปรับ label ของ st.text_input ===== */
+    .stTextInput label {
+        font-size: 24px !important;
+        font-weight: 600 !important;
+        line-height: 1.3 !important;
+    }
 
-/* label ก่อน input */
-.stTextInput label {
-    font-size: 22px !important;
-}
+    /* ===== ปรับข้อความในช่อง input (รวม placeholder) ===== */
+    input[type="text"] {
+        font-size: 22px !important;
+        padding: 8px 12px !important;
+    }
+
+    /* ===== ปรับข้อความจาก st.write(), st.markdown(), st.text() ===== */
+    .stMarkdown, .stText, .stWrite {
+        font-size: 22px !important;
+        line-height: 1.5 !important;
+        font-weight: 500 !important;
+    }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -103,8 +109,7 @@ def parse_list(text, expected_n=None, dtype=float): #ถ้ามีสายอ
 
     return values
 
-# ---------- ใช้งานปรับขนาดอักษรตาม CSS ----------
-st.markdown('<div class="big-text">ผลลัพธ์ขนาดใหญ่</div>', unsafe_allow_html=True)
+
 
 # ---------- ส่วนรับค่า input ----------
 V = st.text_input("PRI VOL (V)", value="", placeholder="พิมพ์ตัวเลข…")
