@@ -113,21 +113,21 @@ def parse_list(text, expected_n=None, dtype=float): #ถ้ามีสายอ
 
 
 # ---------- ส่วนรับค่า input ----------
-V = st.text_input("PRI VOL (V)", value="", placeholder="ค่า V")
-PC = st.text_input("PRI CUR I (PC)", value="", placeholder="ค่า PC")
-YorD = st.text_input("INPUT VOL Y OR D", value="", placeholder="เลือก Y/D (ตามโปรแกรมเดิม)")
-DI = st.text_input("DIAMETER D MM. (DI)", value="", placeholder="ค่า DI")
-L = st.text_input("CORE LENGTH L MM. (L)", value="", placeholder="ค่า L")
-P = st.text_input("NO OF POLE (P)", value="", placeholder="ค่า P")
-S = st.text_input("NO OF SLOT (S)", value="", placeholder="ค่า S")
+V = st.text_input("1.PRI VOL (V)", value="", placeholder="ค่า V")
+PC = st.text_input("2.PRI CUR I (PC)", value="", placeholder="ค่า PC")
+YorD = st.text_input("3.INPUT VOL Y OR D", value="", placeholder="เลือก Y/D (ตามโปรแกรมเดิม)")
+DI = st.text_input("4.DIAMETER D MM. (DI)", value="", placeholder="ค่า DI")
+L = st.text_input("5.CORE LENGTH L MM. (L)", value="", placeholder="ค่า L")
+P = st.text_input("6.NO OF POLE (P)", value="", placeholder="ค่า P")
+S = st.text_input("7.NO OF SLOT (S)", value="", placeholder="ค่า S")
 
-PA = st.text_input("NO OF PARALLEL (PA)", value="", placeholder="ค่า PA")
-B = st.text_input("FLUX DEN (B)", value="", placeholder="ค่า B")
+PA = st.text_input("8.NO OF PARALLEL (PA)", value="", placeholder="ค่า PA")
+B = st.text_input("9.FLUX DEN (B)", value="", placeholder="ค่า B")
 
-J = st.text_input("DIFF CON SIZE IN (J)",  value="", placeholder="ค่า J เช่น 1, 2, 3 ...")
+J = st.text_input("10.DIFF CON SIZE IN (J)",  value="", placeholder="ค่า J เช่น 1, 2, 3 ...")
 #For J
-CI = st.text_input("NO OF CONDUCTOR (CI) \n กรอกตัวเลข 1 ค่า หรือหลายค่า คั่นด้วยเว้นวรรคหรือคอมมา (*จำนวนต้องเท่ากับค่า J) ", value="", placeholder="เช่น 3.5 .55 7 (กรณี J = 3)")
-DA = st.text_input("SIZE NO OF DIAMETER (DA) \n กรอกตัวเลข 1 ค่า หรือหลายค่า คั่นด้วยเว้นวรรคหรือคอมมา (*จำนวนต้องเท่ากับค่า J) ", value="", placeholder="เช่น 3 0.5 7. 2.5 (กรณี J = 4)")
+CI = st.text_input("11.NO OF CONDUCTOR (CI) \n กรอกตัวเลข 1 ค่า หรือหลายค่า คั่นด้วยเว้นวรรคหรือคอมมา (*จำนวนต้องเท่ากับค่า J) ", value="", placeholder="เช่น 3.5 .55 7 (กรณี J = 3)")
+DA = st.text_input("12.SIZE NO OF DIAMETER (DA) \n กรอกตัวเลข 1 ค่า หรือหลายค่า คั่นด้วยเว้นวรรคหรือคอมมา (*จำนวนต้องเท่ากับค่า J) ", value="", placeholder="เช่น 3 0.5 7. 2.5 (กรณี J = 4)")
 
 
 # ปุ่มเท่ากับ
@@ -198,10 +198,14 @@ if calculate:
 
     if valid:
         # แสดง output
+
         st.write("กรุณาแจ้งตัวเลข บรรทัดที่คำนวณผิดพลาด")
+        st.success(f"Current Density =   {CJ_out}   Amp/Sq.mm.")
+        st.info(f"TURN/SLOT  =  {TURN_SLOT}")
 
         # ตรวจสอบทีละขั้นตอนที่คำนวณค่า
-        st.write("ตรวจคำตอบทีละขั้นตอน")
+        st.write("ตรวจคำตอบทีละขั้นตอน (ลบออก/ซ่อน เมื่อ Logic ถูกต้องแล้ว)")
+        st.write("(ลบออก/ซ่อน เมื่อ Logic ถูกต้องแล้ว)")
         st.write(f"1. ค่า V หลังเงื่อนไข Y OR D =  {V_adj}")
         st.write(f"2. ค่า PC หลังเงื่อน Y OR D =  {PC_adj}")
         st.write(f"3. ค่า PM =  {PM_adj}")
