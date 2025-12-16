@@ -4,38 +4,14 @@ from datetime import datetime
 
 st.markdown("""
 <style>
-
-/* =====================================================
-   TEXT INPUT
-   ===================================================== */
-div.stTextInput label {
-    font-size: 24px !important;
-    font-weight: 600 !important;
-}
-
-div.stTextInput input {
-    font-size: 22px !important;
-}
-
-
-/* =====================================================
-   SUCCESS  (ขนาดปกติ)
-   ===================================================== */
-div[data-testid="stSuccess"] p {
-    font-size: 22px !important;
-    font-weight: 500 !important;
-}
-
-
-/* =====================================================
-   INFO  (ใหญ่กว่า ~2 เท่า แบบเห็นชัด)
-   ===================================================== */
-div[data-testid="stInfo"] p {
-    font-size: 44px !important;   /* <<<<<< จุดนี้ */
+/* ครอบ alert ทุกชนิด (info/success/warning/error) */
+div[data-testid="stAlert"] p,
+div[data-testid="stAlert"] li,
+div[data-testid="stAlert"] span {
+    font-size: 32px !important;
     font-weight: 700 !important;
     line-height: 1.3 !important;
 }
-
 </style>
 """, unsafe_allow_html=True)
 
