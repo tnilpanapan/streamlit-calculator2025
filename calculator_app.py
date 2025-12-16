@@ -15,6 +15,36 @@ div[data-testid="stAlert"] span {
 </style>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+<style>
+
+/* =====================================================
+   TEXT INPUT (label + value + placeholder)
+   ===================================================== */
+
+/* label เช่น "1.PRI VOL (V)" */
+div.stTextInput label {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    line-height: 1.3 !important;
+}
+
+/* ตัวอักษรที่พิมพ์ในช่อง */
+div.stTextInput input {
+    font-size: 20px !important;
+    padding: 8px 12px !important;
+}
+
+/* placeholder */
+div.stTextInput input::placeholder {
+    font-size: 20px !important;
+    opacity: 0.6;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+
 
 st.set_page_config(page_title="Calculator 3 Inputs", layout="centered")
 st.title("3-Phase M-Calculator")
