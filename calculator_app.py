@@ -1,34 +1,40 @@
 import streamlit as st
 from datetime import datetime
 
-# ===== CSS ตัวใหญ่ =====
+
 st.markdown("""
 <style>
 
-    /* ===== ปรับ label ของ st.text_input() ===== */
-    div.stTextInput label {
-        font-size: 24px !important;
-        font-weight: 600 !important;
-        line-height: 1.3 !important;
-    }
+/* =====================================================
+   TEXT INPUT (label + input)
+   ===================================================== */
+div.stTextInput label {
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    line-height: 1.3 !important;
+}
 
-    /* ===== ปรับข้อความในช่อง input (รวม placeholder) ===== */
-    div.stTextInput input {
-        font-size: 22px !important;
-        padding: 8px 12px !important;
-    }
+div.stTextInput input {
+    font-size: 22px !important;
+    padding: 8px 12px !important;
+}
 
-    /* ===== ปรับข้อความจาก st.write(), st.markdown(), st.text() ===== */
-    /* ครอบทั้งย่อหน้าและรายการ (li) */
-    .stMarkdown p, .stText p, .stWrite p,
-    .stMarkdown li, .stText li, .stWrite li {
-        font-size: 22px !important;
-        font-weight: 500 !important;
-        line-height: 1.4 !important;
-    }
+
+/* =====================================================
+   ALERT BOXES (success / info / warning / error)
+   ===================================================== */
+div[data-testid="stSuccess"] p,
+div[data-testid="stInfo"] p,
+div[data-testid="stWarning"] p,
+div[data-testid="stError"] p {
+    font-size: 22px !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+}
 
 </style>
 """, unsafe_allow_html=True)
+
 
 st.set_page_config(page_title="Calculator 3 Inputs", layout="centered")
 st.title("3-Phase M-Calculator")
