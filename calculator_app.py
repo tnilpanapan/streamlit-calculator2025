@@ -147,8 +147,8 @@ B = st.text_input("9.FLUX DEN (B)", value="", placeholder="ค่า B")
 
 J = st.text_input("10.DIFF CON SIZE IN (J)",  value="", placeholder="ค่า J เช่น 1, 2, 3 ...")
 #For J
-CI = st.text_input("11.NO OF CONDUCTOR (CI) \n กรอกตัวเลข 1 ค่า หรือหลายค่า คั่นด้วยเว้นวรรคหรือคอมมา (*จำนวนต้องเท่ากับค่า J) ", value="", placeholder="เช่น 3.5 .55 7 (กรณี J = 3)")
-DA = st.text_input("12.SIZE NO OF DIAMETER (DA) \n กรอกตัวเลข 1 ค่า หรือหลายค่า คั่นด้วยเว้นวรรคหรือคอมมา (*จำนวนต้องเท่ากับค่า J) ", value="", placeholder="เช่น 3 0.5 7. 2.5 (กรณี J = 4)")
+CI = st.text_input("11.NO OF CONDUCTOR (CI) \n กรอกตัวเลข 1 ค่า หรือหลายค่า คั่นด้วยเว้นวรรค (*จำนวน = J) ", value="", placeholder="เช่น (0.8x1) (0.85x1) กรอก 1  1 ")
+DA = st.text_input("12.SIZE NO OF DIAMETER (DA) \n กรอกตัวเลข 1 ค่า หรือหลายค่า คั่นด้วยเว้นวรรค (*จำนวน = J) ", value="", placeholder="เช่น (0.8x1) (0.85x1) กรอก .8  0.85 ")
 
 
 # ปุ่มเท่ากับ
