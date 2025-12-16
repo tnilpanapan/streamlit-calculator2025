@@ -19,17 +19,21 @@ st.markdown("""
 <style>
 
 /* =====================================================
-   TEXT INPUT (label + value + placeholder)
+   TEXT INPUT — FIX label เล็กกว่า placeholder
    ===================================================== */
 
-/* label เช่น "1.PRI VOL (V)" */
+/* label ชั้นนอก */
 div.stTextInput label {
-    font-size: 20px !important;
-    font-weight: 600 !important;
     line-height: 1.3 !important;
 }
 
-/* ตัวอักษรที่พิมพ์ในช่อง */
+/* ตัวข้อความจริงใน label */
+div.stTextInput label > div {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+}
+
+/* input value */
 div.stTextInput input {
     font-size: 20px !important;
     padding: 8px 12px !important;
@@ -43,6 +47,7 @@ div.stTextInput input::placeholder {
 
 </style>
 """, unsafe_allow_html=True)
+
 
 
 
