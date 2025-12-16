@@ -6,30 +6,34 @@ st.markdown("""
 <style>
 
 /* =====================================================
-   TEXT INPUT (label + input)
+   TEXT INPUT
    ===================================================== */
 div.stTextInput label {
     font-size: 24px !important;
     font-weight: 600 !important;
-    line-height: 1.3 !important;
 }
 
 div.stTextInput input {
     font-size: 22px !important;
-    padding: 8px 12px !important;
 }
 
 
 /* =====================================================
-   ALERT BOXES (success / info / warning / error)
+   SUCCESS  (ขนาดปกติ)
    ===================================================== */
-div[data-testid="stSuccess"] p,
-div[data-testid="stInfo"] p,
-div[data-testid="stWarning"] p,
-div[data-testid="stError"] p {
+div[data-testid="stSuccess"] p {
     font-size: 22px !important;
     font-weight: 500 !important;
-    line-height: 1.4 !important;
+}
+
+
+/* =====================================================
+   INFO  (ใหญ่กว่า ~2 เท่า แบบเห็นชัด)
+   ===================================================== */
+div[data-testid="stInfo"] p {
+    font-size: 44px !important;   /* <<<<<< จุดนี้ */
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
 }
 
 </style>
