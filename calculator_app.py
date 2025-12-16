@@ -220,11 +220,11 @@ if calculate:
     if valid:
         # แสดง output
         st.write("กรุณาแจ้งตัวเลข บรรทัดที่คำนวณผิดพลาด")
-        # st.success(f"Current Density =   {CJ_out} Amp/Sq.mm.")
-        st.success(f"""
-        Current Density =   {CJ_out}
-                   Amp/Sq.mm.
-                   """)
+        st.success(f"Current Density =   {CJ_out}  \n Amp/Sq.mm.")
+        # st.success(f"""
+        # Current Density =   {CJ_out}
+        #            Amp/Sq.mm.
+        #            """)
         st.info(f"TURN/SLOT  =  {TURN_SLOT}")
 
         # ตรวจสอบทีละขั้นตอนที่คำนวณค่า
