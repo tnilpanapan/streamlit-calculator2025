@@ -8,8 +8,8 @@ st.markdown("""
 div[data-testid="stAlert"] p,
 div[data-testid="stAlert"] li,
 div[data-testid="stAlert"] span {
-    font-size: 32px !important;
-    font-weight: 700 !important;
+    font-size: 28px !important;
+    font-weight: 600 !important;
     line-height: 1.3 !important;
 }
 </style>
@@ -219,9 +219,12 @@ if calculate:
 
     if valid:
         # แสดง output
-
         st.write("กรุณาแจ้งตัวเลข บรรทัดที่คำนวณผิดพลาด")
-        st.success(f"Current Density =   {CJ_out}   Amp/Sq.mm.")
+        # st.success(f"Current Density =   {CJ_out} Amp/Sq.mm.")
+        st.success(f"""
+        Current Density =   {CJ_out}
+                   Amp/Sq.mm.
+                   """)
         st.info(f"TURN/SLOT  =  {TURN_SLOT}")
 
         # ตรวจสอบทีละขั้นตอนที่คำนวณค่า
