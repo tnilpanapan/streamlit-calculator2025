@@ -51,7 +51,7 @@ div.stTextInput input::placeholder {
 
 
 
-st.set_page_config(page_title="Calculator 3 Inputs", layout="centered")
+st.set_page_config(page_title="3-Phase Calculator", layout="centered")
 st.title("3-Phase M-Calculator")
 
 # ---------- ฟังก์ชันคำนวณ ----------
@@ -219,16 +219,9 @@ if calculate:
 
     if valid:
         # แสดง output
-        st.write("กรุณาแจ้งตัวเลข บรรทัดที่คำนวณผิดพลาด")
         st.success(f"Current Density =   {CJ_out}  \n Amp/Sq.mm.")
-        # st.success(f"""
-        # Current Density =   {CJ_out}
-        #            Amp/Sq.mm.
-        #            """)
         st.info(f"TURN/SLOT  =  {TURN_SLOT}")
-
-        # ตรวจสอบทีละขั้นตอนที่คำนวณค่า
-        st.write("ตรวจคำตอบทีละขั้นตอน (ลบออก/ซ่อน เมื่อ Logic ถูกต้องแล้ว)")
+        st.write("ตรวจคำตอบทีละขั้นตอน")
         st.write("(ลบออก/ซ่อน เมื่อ Logic ถูกต้องแล้ว)")
         st.write(f"1. ค่า V หลังเงื่อนไข Y OR D =  {V_adj}")
         st.write(f"2. ค่า PC หลังเงื่อน Y OR D =  {PC_adj}")
