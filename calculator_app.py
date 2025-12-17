@@ -153,7 +153,7 @@ DA = st.text_input("12.SIZE NO OF DIAMETER (DA) \n กรอกตัวเล�
 
 # ปุ่มเท่ากับ
 calculate = st.button(" = ", type="primary")
-
+st.markdown("**3-Phase Results**")
 st.write("---")
 
 # ---------- เมื่อกดปุ่ม = ----------
